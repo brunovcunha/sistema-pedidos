@@ -5,7 +5,9 @@ import jakarta.persistence.*;
 import lombok.NoArgsConstructor;
 
 import java.time.Instant;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @NoArgsConstructor
 @Entity
@@ -22,11 +24,18 @@ public class Order {
     @JoinColumn(name = "user_id")
     private User client;
 
+    @OneToMany(mappedBy = "id.order")
+    private Set<OrderItem> orderItems = new HashSet<>();
+
     public Order(Long id, Instant moment, OrderStatus orderStatus, User client) {
         this.id = id;
         this.moment = moment;
         setOrderStatus(orderStatus);
         this.client = client;
+    }
+
+    public Set<OrderItem> getOrderItems() {
+        return orderItems;
     }
 
     public OrderStatus getOrderStatus() {

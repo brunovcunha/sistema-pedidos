@@ -1,14 +1,8 @@
 package com.brunov.sistemapedidos.config;
 
-import com.brunov.sistemapedidos.entity.Category;
-import com.brunov.sistemapedidos.entity.Order;
-import com.brunov.sistemapedidos.entity.Product;
-import com.brunov.sistemapedidos.entity.User;
+import com.brunov.sistemapedidos.entity.*;
 import com.brunov.sistemapedidos.enums.OrderStatus;
-import com.brunov.sistemapedidos.repository.CategoryRepository;
-import com.brunov.sistemapedidos.repository.OrderRepository;
-import com.brunov.sistemapedidos.repository.ProductRepository;
-import com.brunov.sistemapedidos.repository.UserRepository;
+import com.brunov.sistemapedidos.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
@@ -24,6 +18,7 @@ public class TestConfig implements CommandLineRunner {
     private final OrderRepository orderRepository;
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
+    private final OrderItemRepository orderItemRepository;
 
     @Override
     public void run(String... args) throws Exception {
@@ -62,5 +57,13 @@ public class TestConfig implements CommandLineRunner {
         List<Product> products = Arrays.asList(p1, p2, p3, p4, p5);
 
         productRepository.saveAll(products);
+
+        OrderItem oi1 = new OrderItem(o1, p1, 2, p1.getPrice());
+        OrderItem oi2 = new OrderItem(o1, p3, 1, p3.getPrice());
+        OrderItem oi3 = new OrderItem(o2, p3, 2, p3.getPrice());
+        OrderItem oi4 = new OrderItem(o3, p5, 2, p5.getPrice());
+
+        List<OrderItem> orderItems = Arrays.asList(oi1, oi2, oi3, oi4);
+        orderItemRepository.saveAll(orderItems);
     }
 }
